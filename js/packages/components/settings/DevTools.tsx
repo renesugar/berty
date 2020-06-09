@@ -7,6 +7,7 @@ import { ButtonSetting, ButtonSettingRow } from '../shared-components/SettingsBu
 import { ScreenProps, useNavigation } from '@berty-tech/berty-navigation'
 import { Settings, Chat } from '@berty-tech/hooks'
 
+
 //
 // DevTools
 //
@@ -95,6 +96,9 @@ const BodyDevTools: React.FC<{}> = () => {
 	const _styles = useStylesDevTools()
 	const [{ padding, flex, margin, color, text }] = useStyles()
 	const { navigate } = useNavigation()
+	const generateFakeContacts = Chat.useGenerateFakeContacts()
+	const deleteFakeContacts = Chat.useDeleteFakeContacts()
+	const contacts = Chat.useAccountContacts()
 	return (
 		<View style={[padding.medium, flex.tiny, margin.bottom.small]}>
 			<TracingButton />
@@ -138,6 +142,21 @@ const BodyDevTools: React.FC<{}> = () => {
 				iconColor={color.dark.grey}
 				actionIcon='arrow-ios-forward'
 				disabled
+			/>
+			<ButtonSetting
+				name='Generate fake contacts'
+				icon='book-outline'
+				iconSize={30}
+				iconColor={color.dark.grey}
+				toggled
+				varToggle={contacts.some((item) => item.fake)}
+				actionToggle={(val: boolean) => {
+					if (val) {
+						generateFakeContacts()
+					} else {
+						deleteFakeContacts()
+					}
+				}}
 			/>
 			<ButtonSettingRow
 				state={[
