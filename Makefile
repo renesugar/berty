@@ -22,8 +22,6 @@ gen.clean:
 docker.build:
 	cd go; make docker.build
 
-include bazel.make
-
 .PHONY: goreleaser.dry-run
 goreleaser.dry-run:
 	goreleaser release --rm-dist --snapshot --skip-publish
